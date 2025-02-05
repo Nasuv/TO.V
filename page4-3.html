@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Page 4-3</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://www.youtube.com/iframe_api"></script> <!-- YouTube API 추가 -->
+</head>
+<body>
+    <script>
+        let timeout;
+
+        function resetTimer() {
+            clearTimeout(timeout);
+            timeout = setTimeout(() => {
+                window.location.href = "index.html"; // 6분 후 이동할 페이지
+            }, 6 * 60 * 1000); // 6분
+        }
+
+        window.onload = resetTimer;
+        document.addEventListener("mousemove", resetTimer);
+        document.addEventListener("keydown", resetTimer);
+        document.addEventListener("scroll", resetTimer);
+        document.addEventListener("click", resetTimer);
+
+        // YouTube API 사용을 위한 설정
+        let player;
+        function onYouTubeIframeAPIReady() {
+            player = new YT.Player('youtube-video', {
+                events: {
+                    'onStateChange': onPlayerStateChange
+                }
+            });
+        }
+
+        // 영상이 끝나면 영상 창을 제거
+        function onPlayerStateChange(event) {
+            if (event.data === YT.PlayerState.ENDED) {
+                let iframe = document.getElementById('youtube-video');
+                iframe.parentNode.removeChild(iframe); // iframe 제거
+            }
+        }
+
+        // 클릭을 막을 투명 레이어 생성
+        function addOverlay() {
+            const iframeWrapper = document.querySelector('.video-wrapper');
+            const overlay = document.createElement('div');
+            overlay.style.position = 'absolute';
+            overlay.style.top = '0';
+            overlay.style.left = '0';
+            overlay.style.width = '100%';
+            overlay.style.height = '33%';  // 하단 1/3부분에만 투명 레이어 추가
+            overlay.style.backgroundColor = 'rgba(0, 0, 0, 0)';  // 투명한 레이어
+            overlay.style.pointerEvents = 'none'; // 클릭 이벤트 차단
+            iframeWrapper.appendChild(overlay);
+        }
+
+        // 페이지 로딩 후 투명 레이어 추가
+        window.onload = function() {
+            addOverlay();
+            resetTimer();  // 타이머 초기화
+        };
+    </script>
+
+    <div class="page-container">
+        <div class="video-wrapper" style="position: relative;">
+            <iframe id="youtube-video" width="1078" height="607"
+                src="https://www.youtube.com/embed/UIe7TGx8kNE?enablejsapi=1&autoplay=0&rel=0&modestbranding=1"
+                title="YouTube video player" frameborder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allowfullscreen>
+            </iframe>
+        </div>
+    </div>
+
+    <a href="index.html" class="back-to-index-button">뒤로가기</a>
+
+    <style>
+        .back-to-index-button {
+            display: inline-block;
+            background-color: white;
+            color: black;
+            padding: 10px 20px;
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: bold;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .back-to-index-button:hover {
+            background-color: black;
+            color: white;
+        }
+
+        .video-wrapper {
+            position: relative;
+            width: 100%;
+        }
+    </style>
+
+</body>
+</html>
