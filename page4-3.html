@@ -3,9 +3,41 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Page 4-3</title>
+    <title>Page 2-2</title>
     <link rel="stylesheet" href="styles.css">
     <script src="https://www.youtube.com/iframe_api"></script> <!-- YouTube API 추가 -->
+
+    <style>
+        .video-wrapper {
+            position: relative; /* 추가: iframe을 감싸는 div에 상대적 위치 지정 */
+            display: inline-block; /* 추가: iframe 크기에 맞게 div 크기 조정 */
+        }
+
+        iframe {
+            display: block; /* 추가: iframe을 block 요소로 설정 */
+        }
+
+        .back-to-index-button {
+            position: absolute; /* 추가: 버튼을 video-wrapper 기준으로 배치 */
+            bottom: -70px; /* 변경: 버튼을 iframe 아래로 70px 떨어뜨림 */
+            right: 10px; /* 변경: 우측에서 10px 간격 */
+            background-color: rgba(255, 255, 255, 0.9); /* 반투명한 배경 */
+            color: black;
+            padding: 12px 24px; /* 변경: 버튼 크기 조정 */
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: bold;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s, color 0.3s;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* 추가: 버튼에 그림자 효과 */
+        }
+
+        .back-to-index-button:hover {
+            background-color: black;
+            color: white;
+        }
+    </style>
 </head>
 <body>
     <script>
@@ -41,65 +73,20 @@
                 iframe.parentNode.removeChild(iframe); // iframe 제거
             }
         }
-
-        // 클릭을 막을 투명 레이어 생성
-        function addOverlay() {
-            const iframeWrapper = document.querySelector('.video-wrapper');
-            const overlay = document.createElement('div');
-            overlay.style.position = 'absolute';
-            overlay.style.top = '0';
-            overlay.style.left = '0';
-            overlay.style.width = '100%';
-            overlay.style.height = '33%';  // 하단 1/3부분에만 투명 레이어 추가
-            overlay.style.backgroundColor = 'rgba(0, 0, 0, 0)';  // 투명한 레이어
-            overlay.style.pointerEvents = 'none'; // 클릭 이벤트 차단
-            iframeWrapper.appendChild(overlay);
-        }
-
-        // 페이지 로딩 후 투명 레이어 추가
-        window.onload = function() {
-            addOverlay();
-            resetTimer();  // 타이머 초기화
-        };
     </script>
 
     <div class="page-container">
-        <div class="video-wrapper" style="position: relative;">
+        <div class="video-wrapper">
             <iframe id="youtube-video" width="1078" height="607"
                 src="https://www.youtube.com/embed/UIe7TGx8kNE?enablejsapi=1&autoplay=0&rel=0&modestbranding=1"
                 title="YouTube video player" frameborder="0"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                 allowfullscreen>
             </iframe>
+            
+            <!-- '뒤로가기' 버튼을 iframe의 우측 하단 바깥쪽에 여백을 두고 배치 -->
+            <a href="index.html" class="back-to-index-button">뒤로가기</a>
         </div>
     </div>
-
-    <a href="index.html" class="back-to-index-button">뒤로가기</a>
-
-    <style>
-        .back-to-index-button {
-            display: inline-block;
-            background-color: white;
-            color: black;
-            padding: 10px 20px;
-            text-decoration: none;
-            font-size: 16px;
-            font-weight: bold;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background-color 0.3s, color 0.3s;
-        }
-
-        .back-to-index-button:hover {
-            background-color: black;
-            color: white;
-        }
-
-        .video-wrapper {
-            position: relative;
-            width: 100%;
-        }
-    </style>
-
 </body>
 </html>
