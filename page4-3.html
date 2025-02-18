@@ -66,11 +66,10 @@
             });
         }
 
-        // 영상이 끝나면 영상 창을 제거
+        // 영상이 끝나면 index 페이지로 이동
         function onPlayerStateChange(event) {
             if (event.data === YT.PlayerState.ENDED) {
-                let iframe = document.getElementById('youtube-video');
-                iframe.parentNode.removeChild(iframe); // iframe 제거
+                window.location.href = "index.html"; // 자동 이동
             }
         }
     </script>
